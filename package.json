@@ -1,0 +1,21 @@
+{
+	"name": "todo-backend",
+	"version": "1.0.0",
+	"description": "",
+	"main": "server.js",
+	"scripts": {
+		"test": "jest --watchAll"
+	},
+	"keywords": [],
+	"author": "Kelechi Odom",
+	"license": "MIT",
+	"dependencies": {
+		"@types/jest": "^26.0.14",
+		"cors": "^2.8.5",
+		"express": "^4.17.1",
+		"jest": "^26.4.2",
+		"mongoose": "^5.10.7",
+		"nodemon": "^2.0.4",
+		"supertest": "^5.0.0"
+	}
+}
