@@ -6,7 +6,9 @@
 	"scripts": {
 		"start": "node server",
 		"server": "nodemon server",
-		"test": "jest --watchAll"
+		"test": "jest --watchAll",
+		"client": "npm start --prefix client",
+		"dev": "concurrently \"npm run server\" \"npm run client\""
 	},
 	"keywords": [],
 	"author": "Kelechi Odom",
