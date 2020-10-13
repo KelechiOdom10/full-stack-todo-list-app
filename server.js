@@ -1,7 +1,11 @@
-const express = require("express");
+const colors = require("colors");
 const cors = require("cors");
+const dotenv = require("dotenv");
+const express = require("express");
 const mongoose = require("mongoose");
-const port = 5005;
+const morgan = require("morgan");
+
+dotenv.config({ path: "./config/config.env" });
 
 mongoose.connect("mongodb://localhost/simple-demo", {
 	useNewUrlParser: true,
@@ -14,9 +18,10 @@ const {
 	findTodoById,
 	updateTodoById,
 	deleteTodoById,
-} = require("../controllers/todoController");
+} = require("./controllers/todoController");
 
 const app = express();
+const port = process.env.PORT || 5005;
 
 app.use(cors());
 app.use(express.json());
@@ -89,7 +94,9 @@ app.delete("/todos/:id", async (req, res) => {
 });
 
 app.listen(port, () => {
-	console.log(`Server ran successfully on port ${port}`);
+	console.log(
+		`Server running in ${process.env.NODE_ENV} mode on port ${port}`.yellow.bold
+	);
 });
 
 module.exports = app;
