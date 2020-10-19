@@ -19,13 +19,15 @@ import {
 	FormLabel,
 	Input,
 } from "@chakra-ui/core";
+import { useGlobalState } from "../context/GlobalState";
 
 function Todo(props) {
-	const { text, title, id, dispatch, completed } = props;
+	const { todo } = props;
 	const { isOpen, onOpen, onClose } = useDisclosure();
+	const { deleteTodo, updateTodo, toggleTodo } = useGlobalState();
 
-	const [modalTitle, setModalTitle] = useState(title);
-	const [modalText, setModalText] = useState(text);
+	const [modalTitle, setModalTitle] = useState(todo.title);
+	const [modalText, setModalText] = useState(todo.text);
 
 	const handleModalTitleChange = e => {
 		setModalTitle(e.target.value);
@@ -48,18 +50,20 @@ function Todo(props) {
 				mb={3}
 			>
 				<Stack>
-					<Heading as={completed ? "del" : null} fontSize="xl">
-						{title}
+					<Heading as={todo.completed ? "del" : null} fontSize="xl">
+						{todo.title}
 					</Heading>
-					<Text mt={1} as={completed ? "del" : null}>
-						{text}
+					<Text mt={1} as={todo.completed ? "del" : null}>
+						{todo.text}
 					</Text>
 				</Stack>
 
 				<Flex align="center">
 					<Checkbox
 						p={2}
-						onChange={() => dispatch({ type: "toggle_todos", payload: id })}
+						onChange={() =>
+							toggleTodo(todo._id, { completed: !todo.completed })
+						}
 					/>
 					<IconButton
 						variantColor="green"
@@ -75,7 +79,7 @@ function Todo(props) {
 						icon="delete"
 						size="sm"
 						m={2}
-						onClick={() => dispatch({ type: "remove_todos", payload: id })}
+						onClick={() => deleteTodo(todo._id)}
 					/>
 				</Flex>
 			</Stack>
@@ -113,9 +117,10 @@ function Todo(props) {
 							variantColor="blue"
 							mr={3}
 							onClick={() => {
-								dispatch({
-									type: "update_todos",
-									payload: { id, text: modalText, title: modalTitle },
+								updateTodo(todo._id, {
+									id: todo.id,
+									text: modalText,
+									title: modalTitle,
 								});
 								onClose();
 							}}
