@@ -4,16 +4,17 @@ const {
 	createTodo,
 	updateTodoById,
 	deleteTodoById,
-	findTodoById,
+	// findTodoById,
 } = require("../controllers/todoController");
 const router = express.Router();
+const { protect } = require("../middleware/auth");
 
-router.route("/").get(getTodos).post(createTodo);
+router.route("/").get(protect, getTodos).post(protect, createTodo);
 
 router
 	.route("/:id")
-	.get(findTodoById)
-	.put(updateTodoById)
-	.delete(deleteTodoById);
+	// .get(findTodoById)
+	.put(protect, updateTodoById)
+	.delete(protect, deleteTodoById);
 
 module.exports = router;
