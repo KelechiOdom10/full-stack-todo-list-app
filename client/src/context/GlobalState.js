@@ -67,8 +67,14 @@ const GlobalStateProvider = ({ children }) => {
 
 	//* Actions
 	async function getTodos() {
+		const config = {
+			headers: {
+				"Content-Type": "application/json",
+				Authorization: `Bearer ${localStorage.getItem("appToken")}`,
+			},
+		};
 		try {
-			const res = await axios.get("/api/v1/todos");
+			const res = await axios.get("/api/v1/todos", config);
 			dispatch({
 				type: "GET_TODOS",
 				payload: res.data.data.todos,
