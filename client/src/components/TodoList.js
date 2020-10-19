@@ -1,23 +1,23 @@
 import React from "react";
-import { Stack } from "@chakra-ui/core";
-import { useGlobalState } from "../context/GlobalState";
+import { Stack, Spinner } from "@chakra-ui/core";
 import Todo from "./Todo";
 
-function TodoList() {
-	const { todos, dispatch } = useGlobalState();
+function TodoList(props) {
+	const { loading, todos } = props;
 	return (
 		<>
 			<Stack mt={4}>
-				{todos.map(todo => (
-					<Todo
-						dispatch={dispatch}
-						id={todo.id}
-						text={todo.text}
-						title={todo.title}
-						key={todo.id}
-						completed={todo.completed}
+				{loading ? (
+					<Spinner
+						thickness="4px"
+						speed="0.8s"
+						emptyColor="gray.200"
+						color="blue.500"
+						size="xl"
 					/>
-				))}
+				) : (
+					todos.map(todo => <Todo key={todo._id} todo={todo} />)
+				)}
 			</Stack>
 		</>
 	);
