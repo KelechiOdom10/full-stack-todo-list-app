@@ -5,6 +5,9 @@ const Todo = require("../models/todoModel");
 //* @access Public
 async function createTodo(req, res, next) {
 	try {
+		//? Add user to req.body
+		req.body.user = req.user.id;
+
 		res.status(201);
 		const { text, title } = req.body;
 		const todo = await Todo.create(req.body);
@@ -37,7 +40,7 @@ async function createTodo(req, res, next) {
 async function getTodos(req, res, next) {
 	try {
 		res.status(202);
-		const todos = await Todo.find({});
+		const todos = await Todo.find({ user: req.user.id });
 		res.json({
 			status: "success",
 			count: todos.length,
