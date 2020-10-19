@@ -11,7 +11,12 @@ async function register(req, res, next) {
 		//? Create user
 		const user = await User.create({ username, email, password });
 
-		sendTokenResponse(user, 200, res);
+		const token = await user.getSignedToken();
+		res.status(200);
+		res.json({
+			status: "success",
+			token,
+		});
 	} catch (error) {
 		return next(error);
 	}
@@ -52,7 +57,7 @@ async function login(req, res, next) {
 //* Get token from Model, create cookie and send response
 const sendTokenResponse = async (user, statusCode, res) => {
 	const token = await user.getSignedToken();
-
+	const { _id, email, username } = user;
 	const options = {
 		expires: new Date(
 			Date.now() + process.env.JWT_COOKIE_EXPIRE * 24 * 60 * 60 * 1000
@@ -67,6 +72,11 @@ const sendTokenResponse = async (user, statusCode, res) => {
 	res.status(statusCode).cookie("token", token, options).json({
 		status: "success",
 		token,
+		user: {
+			_id,
+			username,
+			email,
+		},
 	});
 };
 
