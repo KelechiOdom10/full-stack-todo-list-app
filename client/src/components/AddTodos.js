@@ -9,7 +9,7 @@ import {
 import { useGlobalState } from "../context/GlobalState";
 
 function AddTodos(props) {
-	const { dispatch } = useGlobalState();
+	const { addTodos } = useGlobalState();
 	const [title, setTitle] = useState("");
 	const [text, setText] = useState("");
 
@@ -24,15 +24,7 @@ function AddTodos(props) {
 	const handleSubmit = event => {
 		event.preventDefault();
 		console.log(text, title);
-		dispatch({
-			type: "add_todos",
-			payload: {
-				id: Math.floor(Math.random() * 10000000),
-				title,
-				text,
-				completed: false,
-			},
-		});
+		addTodos({ title, text });
 		setText("");
 		setTitle("");
 	};
