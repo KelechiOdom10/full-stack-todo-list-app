@@ -1,25 +1,21 @@
 import React, { useEffect } from "react";
 import { ThemeProvider, CSSReset } from "@chakra-ui/core";
 import "./App.css";
-import AddTodos from "./components/AddTodos";
-import TodoList from "./components/TodoList";
+import { Router } from "@reach/router";
 import { useGlobalState } from "./context/GlobalState";
+import Home from "./components/Home";
+import HomeGuest from "./components/HomeGuest";
+import Header from "./components/Header";
+import { useLocalState } from "./context/LocalStateContext";
 
 function App() {
-	const { loading, todos, getTodos } = useGlobalState();
-
-	useEffect(() => {
-		getTodos();
-		//eslint-disable-next-line react-hooks/exhaustive-deps
-	}, []);
+	const { loggedIn } = useLocalState();
 
 	return (
 		<ThemeProvider>
 			<CSSReset />
-			<div className="app">
-				<AddTodos />
-				<TodoList todos={todos} loading={loading} />
-			</div>
+			<Header loggedIn={loggedIn} />
+			<Router>{loggedIn ? <HomeGuest path="/" /> : <Home path="/" />}</Router>
 		</ThemeProvider>
 	);
 }
