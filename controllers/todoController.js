@@ -42,13 +42,11 @@ async function getTodos(req, res, next) {
 	try {
 		res.status(202);
 		const todos = await Todo.find({ user: req.user.id });
-		const user = await User.findOne({ _id: req.user.id });
 		res.json({
 			status: "success",
 			count: todos.length,
 			data: {
 				todos,
-				user,
 			},
 		});
 	} catch (error) {
