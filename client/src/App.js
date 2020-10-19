@@ -1,16 +1,25 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { ThemeProvider, CSSReset } from "@chakra-ui/core";
-import Home from "./components/Home";
-
-import { GlobalStateProvider } from "./context/GlobalState";
+import "./App.css";
+import AddTodos from "./components/AddTodos";
+import TodoList from "./components/TodoList";
+import { useGlobalState } from "./context/GlobalState";
 
 function App() {
+	const { loading, todos, getTodos } = useGlobalState();
+
+	useEffect(() => {
+		getTodos();
+		//eslint-disable-next-line react-hooks/exhaustive-deps
+	}, []);
+
 	return (
 		<ThemeProvider>
 			<CSSReset />
-			<GlobalStateProvider>
-				<Home />
-			</GlobalStateProvider>
+			<div className="app">
+				<AddTodos />
+				<TodoList todos={todos} loading={loading} />
+			</div>
 		</ThemeProvider>
 	);
 }

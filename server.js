@@ -18,6 +18,10 @@ const port = process.env.PORT || 5005;
 app.use(cors());
 app.use(express.json());
 
+if (process.env.NODE_ENV === "development") {
+	app.use(morgan("dev"));
+}
+
 app.use("/api/v1/todos", todos);
 
 app.listen(port, () => {
