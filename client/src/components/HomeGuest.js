@@ -1,5 +1,4 @@
-import React, { useEffect } from "react";
-import { useGlobalState } from "../context/GlobalState";
+import React from "react";
 import AddTodos from "./AddTodos";
 import TodoList from "./TodoList";
 
