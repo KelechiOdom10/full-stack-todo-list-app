@@ -11,6 +11,9 @@ import {
 	AlertIcon,
 	AlertTitle,
 	AlertDescription,
+	InputRightElement,
+	IconButton,
+	InputGroup,
 } from "@chakra-ui/core";
 import { useState } from "react";
 import axios from "axios";
@@ -18,6 +21,7 @@ import axios from "axios";
 function Home() {
 	const [username, setUsername] = useState("");
 	const [email, setEmail] = useState("");
+	const [showPassword, setShowPassword] = useState(false);
 	const [password, setPassword] = useState("");
 	const [token, setToken] = useState("");
 
@@ -85,14 +89,26 @@ function Home() {
 							</FormControl>
 							<FormControl mt={6} isRequired>
 								<FormLabel>Password</FormLabel>
-								<Input
-									type="password"
-									placeholder="*******"
-									onChange={e => setPassword(e.target.value)}
-									value={password}
-								/>
+								<InputGroup>
+									<Input
+										type={showPassword ? "text" : "password"}
+										placeholder="*******"
+										onChange={e => setPassword(e.target.value)}
+										value={password}
+									/>
+									<InputRightElement width="4.1rem">
+										<IconButton
+											h="1.75rem"
+											size="lg"
+											icon={showPassword ? "view-off" : "view"}
+											onClick={() => setShowPassword(!showPassword)}
+										>
+											{showPassword ? "Hide" : "Show"}
+										</IconButton>
+									</InputRightElement>
+								</InputGroup>
 							</FormControl>
-							<Button width="full" mt={4} type="submit">
+							<Button mt={4} type="submit">
 								Sign Up
 							</Button>
 						</form>

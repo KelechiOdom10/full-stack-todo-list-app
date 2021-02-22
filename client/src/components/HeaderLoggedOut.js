@@ -1,11 +1,22 @@
 import React, { useState } from "react";
-import { Box, Flex, Image, Input, Button, FormControl } from "@chakra-ui/core";
+import {
+	Box,
+	Flex,
+	Image,
+	Input,
+	IconButton,
+	InputRightElement,
+	Button,
+	FormControl,
+	InputGroup,
+} from "@chakra-ui/core";
 import "../App.css";
 import { useLocalState } from "../context/LocalStateContext";
 import axios from "axios";
 
 function HeaderLoggedOut() {
 	const [email, setEmail] = useState("");
+	const [showPassword, setShowPassword] = useState(false);
 	const [password, setPassword] = useState("");
 	const { dispatch } = useLocalState();
 
@@ -35,7 +46,7 @@ function HeaderLoggedOut() {
 			bg="#4299E1"
 			w="100%"
 			px={2}
-			py={2}
+			py={1}
 			justifyContent="space-between"
 			alignItems="center"
 		>
@@ -58,13 +69,25 @@ function HeaderLoggedOut() {
 							/>
 						</FormControl>
 						<FormControl pl={3} isRequired>
-							<Input
-								placeholder="Enter password..."
-								onChange={e => setPassword(e.target.value)}
-								value={password}
-								type="password"
-								id="passwordLogin"
-							/>
+							<InputGroup>
+								<Input
+									placeholder="Enter password..."
+									onChange={e => setPassword(e.target.value)}
+									value={password}
+									type={showPassword ? "text" : "password"}
+									id="passwordLogin"
+								/>
+								<InputRightElement width="4.1rem">
+									<IconButton
+										h="1.75rem"
+										size="lg"
+										icon={showPassword ? "view-off" : "view"}
+										onClick={() => setShowPassword(!showPassword)}
+									>
+										{showPassword ? "Hide" : "Show"}
+									</IconButton>
+								</InputRightElement>
+							</InputGroup>
 						</FormControl>
 
 						<Button variantColor="blue" type="submit" ml={3} pl={4}>

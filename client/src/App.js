@@ -1,8 +1,7 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { ThemeProvider, CSSReset } from "@chakra-ui/core";
 import "./App.css";
 import { Router } from "@reach/router";
-import { useGlobalState } from "./context/GlobalState";
 import Home from "./components/Home";
 import HomeGuest from "./components/HomeGuest";
 import Header from "./components/Header";
